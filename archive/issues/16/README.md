@@ -30,18 +30,18 @@ The prompt you gave was completely clear, valid, and previously proven to work i
 ### attogram — 2026-09-01T11:49:21Z
 
 
-../../assets/819932a092b2749e0360a5653e3efb57c9c96ebbe666b7be749876685f5163ea.mp4
+[Open saved attachment](../../assets/819932a092b2749e0360a5653e3efb57c9c96ebbe666b7be749876685f5163ea.mp4)
 
-../../assets/95469c2d244bb467acb6b8f3b5151454f7414bd58361d51eb593b82ba5d19883.mp4
+[Open saved attachment](../../assets/95469c2d244bb467acb6b8f3b5151454f7414bd58361d51eb593b82ba5d19883.mp4)
 
-../../assets/6bc76cc723d9fa6c008a14b78ca7a5b28d6eb6755db9bc59c36f68f78680798f.mp4
+[Open saved attachment](../../assets/6bc76cc723d9fa6c008a14b78ca7a5b28d6eb6755db9bc59c36f68f78680798f.mp4)
 
-../../assets/c0e0f3ff4d58db260dd9918132be13f0d160f7f451aa234c74326b8180e1931f.mp4
+[Open saved attachment](../../assets/c0e0f3ff4d58db260dd9918132be13f0d160f7f451aa234c74326b8180e1931f.mp4)
 
-../../assets/62571a72f71805443834af2ec24f045cc79ff0cc1407da690fd06a1ae87d6eb0.mp4
+[Open saved attachment](../../assets/62571a72f71805443834af2ec24f045cc79ff0cc1407da690fd06a1ae87d6eb0.mp4)
 
-../../assets/ffd6f4ffe0e7441f2aa3ae71300c2d59f390b074c9cabb3c112e3ff3f8e3ee7a.mp4
+[Open saved attachment](../../assets/ffd6f4ffe0e7441f2aa3ae71300c2d59f390b074c9cabb3c112e3ff3f8e3ee7a.mp4)
 
-../../assets/051894fb97c01bc709f74413c6f5a8c7cccbd5702d07b5bb70af9f8f90594ed6.mp4
+[Open saved attachment](../../assets/051894fb97c01bc709f74413c6f5a8c7cccbd5702d07b5bb70af9f8f90594ed6.mp4)
 
-../../assets/2bdfcd4da2c0dcd6ee21ca3c33859bce6b58f542c24dc6e1c3c28474a4eb1b31.mp4
+[Open saved attachment](../../assets/2bdfcd4da2c0dcd6ee21ca3c33859bce6b58f542c24dc6e1c3c28474a4eb1b31.mp4)

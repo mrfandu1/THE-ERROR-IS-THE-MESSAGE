@@ -7,7 +7,7 @@ Created: 2026-09-09T07:51:13Z
 
 
 
-../../assets/a2ad6716106088aa10e13e8afb6122416700e42a6b3ece30c9c2b8f7a22d3663.mp4
+[Open saved attachment](../../assets/a2ad6716106088aa10e13e8afb6122416700e42a6b3ece30c9c2b8f7a22d3663.mp4)
 
 
 <img width="1376" height="768" alt="Image" src="../../assets/bb1848a12cc4c2659fb468774d08b017ceb4518a237a9a1543faf4a9b1275822.png" />

@@ -27,6 +27,6 @@ Last evening
 
 https://github.com/user-attachments/assets/c501296b-e119-4395-a9e2-f0980ffa5213
 
-../../assets/2eb948588b1e96af67249bfad97bdd72bd547d1b20f69cb353b9cec1c7b23329.mp4
+[Open saved attachment](../../assets/2eb948588b1e96af67249bfad97bdd72bd547d1b20f69cb353b9cec1c7b23329.mp4)
 
-../../assets/7dbd25d684ba39af9ee5b1f134226a2af060440a677c19fd15123807e16eb80a.mp4
+[Open saved attachment](../../assets/7dbd25d684ba39af9ee5b1f134226a2af060440a677c19fd15123807e16eb80a.mp4)

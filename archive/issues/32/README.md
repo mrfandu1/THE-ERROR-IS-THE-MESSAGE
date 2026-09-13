@@ -6,7 +6,7 @@ State: open
 Created: 2026-09-07T11:28:31Z
 
 
-../../assets/88025d8d6330aab13a5fb872f5252ccdfae654549c7a1bc47bf5ecd2826b2862.mp4
+[Open saved attachment](../../assets/88025d8d6330aab13a5fb872f5252ccdfae654549c7a1bc47bf5ecd2826b2862.mp4)
 
 
 ## Comments

@@ -6,7 +6,7 @@ State: open
 Created: 2026-09-11T16:42:42Z
 
 
-../../assets/1d069148dc69a8c2d0d6656737b4ff373934ef9b19108c404c4da4812f6eadfb.mp4
+[Open saved attachment](../../assets/1d069148dc69a8c2d0d6656737b4ff373934ef9b19108c404c4da4812f6eadfb.mp4)
 
 <img width="1548" height="228" alt="Image" src="../../assets/714a6a37b9df3f7cfd35cec3bc9160fce93a7f41774b4f120b778dbf9793d165.jpg" />
 
@@ -31,10 +31,10 @@ Created: 2026-09-11T16:42:42Z
 <img width="4000" height="3000" alt="Image" src="../../assets/4eaeea9fc2c96f1180dacf3b0b1d83b3640f15d0ceae3c62a3fcb0848953ef11.jpg" />
 
 
-../../assets/3fbec69792b630821635a726e495bb9767df227232f60242cf9306708195b930.mp4
+[Open saved attachment](../../assets/3fbec69792b630821635a726e495bb9767df227232f60242cf9306708195b930.mp4)
 
 
 ### attogram — 2026-09-11T16:49:32Z
 
 
-../../assets/3fabff28ac9bddf1aaf0d3c12acdee2d6f2d51045efc5a6adb43801d8597e096.mp4
+[Open saved attachment](../../assets/3fabff28ac9bddf1aaf0d3c12acdee2d6f2d51045efc5a6adb43801d8597e096.mp4)

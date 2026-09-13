@@ -73,10 +73,10 @@ Gemini
 ### attogram — 2026-09-11T07:33:58Z
 
 
-../../assets/7e0ae61900639769f9e505c32b42a158f981a69899884b7483440ab65cd0a7b3.mp4
+[Open saved attachment](../../assets/7e0ae61900639769f9e505c32b42a158f981a69899884b7483440ab65cd0a7b3.mp4)
 
-../../assets/221060b067e0b0af64a281202b90c075fc6db17ff3b59512edff213679f804df.mp4
+[Open saved attachment](../../assets/221060b067e0b0af64a281202b90c075fc6db17ff3b59512edff213679f804df.mp4)
 
-../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4
+[Open saved attachment](../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4)
 
-../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4
+[Open saved attachment](../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4)

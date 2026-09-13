@@ -234,7 +234,7 @@ Tell me: are you logging their interactions with the bikes or mapping their terr
 ### attogram — 2026-09-01T13:50:49Z
 
 
-../../assets/3fbec69792b630821635a726e495bb9767df227232f60242cf9306708195b930.mp4
+[Open saved attachment](../../assets/3fbec69792b630821635a726e495bb9767df227232f60242cf9306708195b930.mp4)
 
 <img width="4000" height="3000" alt="Image" src="../../assets/4eaeea9fc2c96f1180dacf3b0b1d83b3640f15d0ceae3c62a3fcb0848953ef11.jpg" />
 
@@ -244,7 +244,7 @@ Tell me: are you logging their interactions with the bikes or mapping their terr
 <img width="3000" height="4000" alt="Image" src="../../assets/310af9c2db93d907bc7bd8a94f7236cdd7cc5de345562e1c767d9dec7a4820d0.jpg" />
 <img width="3000" height="4000" alt="Image" src="../../assets/95686b849148e7a761ff980e946dfdbe5c5d1e209f9e94d970d3cbb7679c557f.jpg" />
 
-../../assets/62915aad51dd1530b6795dfe4399c33b31e42939133b8fd014574c6ad8dce641.mp4
+[Open saved attachment](../../assets/62915aad51dd1530b6795dfe4399c33b31e42939133b8fd014574c6ad8dce641.mp4)
 
 <img width="3000" height="4000" alt="Image" src="../../assets/d7fdbf4fa785d73673e2d11841d856a189626e7120e7dd09cf7dfd8434aa7d74.jpg" />
 
@@ -252,24 +252,24 @@ Tell me: are you logging their interactions with the bikes or mapping their terr
 ### attogram — 2026-09-01T13:52:36Z
 
 
-../../assets/59c12eef14df22a6e1f5fce22bf78fd0425ac7eb3a21206191278226134985f9.mp4
+[Open saved attachment](../../assets/59c12eef14df22a6e1f5fce22bf78fd0425ac7eb3a21206191278226134985f9.mp4)
 
-../../assets/bcf9b7e62091bc12075f31f69281c5233c2c0bf08694399ee07811f2c8b4cc53.mp4
+[Open saved attachment](../../assets/bcf9b7e62091bc12075f31f69281c5233c2c0bf08694399ee07811f2c8b4cc53.mp4)
 
-../../assets/9be4d5376ebecc084566857696d389d3daa2871cf87688a6de75e3a48b1d9abd.mp4
+[Open saved attachment](../../assets/9be4d5376ebecc084566857696d389d3daa2871cf87688a6de75e3a48b1d9abd.mp4)
 
-../../assets/603dba5ce2f6afd6ca5f90dde29d0b2d038e83611811eb435f38e90bc34257a7.mp4
+[Open saved attachment](../../assets/603dba5ce2f6afd6ca5f90dde29d0b2d038e83611811eb435f38e90bc34257a7.mp4)
 
-../../assets/9984d6943df19106d782560207e102b8a30200a45e78cd7f41353cb7f2ab5588.mp4
+[Open saved attachment](../../assets/9984d6943df19106d782560207e102b8a30200a45e78cd7f41353cb7f2ab5588.mp4)
 
-../../assets/9ba9c7fcaded8d331c6ac5f6e1d7fe09da9c2047814576f31b0c2fbea4cc0941.mp4
+[Open saved attachment](../../assets/9ba9c7fcaded8d331c6ac5f6e1d7fe09da9c2047814576f31b0c2fbea4cc0941.mp4)
 
-../../assets/ba92a7ec20d738fffc389e5f429b3dd319848edb4ebe1b3fa85af2f13b97fe72.mp4
+[Open saved attachment](../../assets/ba92a7ec20d738fffc389e5f429b3dd319848edb4ebe1b3fa85af2f13b97fe72.mp4)
 
-../../assets/342be1377f2121af4682e23d3a090e94405c37e4f9c35c9c4844f75c86223104.mp4
+[Open saved attachment](../../assets/342be1377f2121af4682e23d3a090e94405c37e4f9c35c9c4844f75c86223104.mp4)
 
-../../assets/ac3a6d16838cd99d921481884bae098b0ac191143b1809700df4fb88c1e3de7e.mp4
+[Open saved attachment](../../assets/ac3a6d16838cd99d921481884bae098b0ac191143b1809700df4fb88c1e3de7e.mp4)
 
-../../assets/11e49784bab0809f8611b63faeb282d1d25f5658e02e15b52480b9148ab32e10.mp4
+[Open saved attachment](../../assets/11e49784bab0809f8611b63faeb282d1d25f5658e02e15b52480b9148ab32e10.mp4)
 
-../../assets/1dcb600de1babfc497458270dd19c0eff4533679bc6c820d489e97a7f842fa12.mp4
+[Open saved attachment](../../assets/1dcb600de1babfc497458270dd19c0eff4533679bc6c820d489e97a7f842fa12.mp4)

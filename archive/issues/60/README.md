@@ -64,13 +64,13 @@ The bounty of €100 will be awarded upon demonstrating a working execution on a
 Examples of embedded artifacts in issues:
 
 
-../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4
+[Open saved attachment](../../assets/3603995f540a22b1ebdcdc928a54b5bfa1a3048499aa644a6157a265bbc611a4.mp4)
 
 https://github.com/user-attachments/assets/fbea768a-c8c7-4cec-9725-f1f60c0a36a2
 
-../../assets/f748f4594fb8a00f88666d2032f711da6eea58d232d447abf47a98be4490eef0.mp4
+[Open saved attachment](../../assets/f748f4594fb8a00f88666d2032f711da6eea58d232d447abf47a98be4490eef0.mp4)
 
-../../assets/64e738efa7d99bea5d4ded3dc1a6234b9369c12a21e8fc6187ff3e8c0a8c8aef.mp4
+[Open saved attachment](../../assets/64e738efa7d99bea5d4ded3dc1a6234b9369c12a21e8fc6187ff3e8c0a8c8aef.mp4)
 
 
 ### attogram — 2026-09-13T08:30:49Z
@@ -78,55 +78,55 @@ https://github.com/user-attachments/assets/fbea768a-c8c7-4cec-9725-f1f60c0a36a2
 
 Examples music:
 
-../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4
+[Open saved attachment](../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4)
 
-../../assets/77f1b21969df3ade1a94725d2235a8e1c21959f8f1bc778efa075286068c0f99.mp4
+[Open saved attachment](../../assets/77f1b21969df3ade1a94725d2235a8e1c21959f8f1bc778efa075286068c0f99.mp4)
 
-../../assets/465404d0be4f1b0651f268a21e9a0a60b223a7a02d6267c443e4dee6f8b179c5.mp4
+[Open saved attachment](../../assets/465404d0be4f1b0651f268a21e9a0a60b223a7a02d6267c443e4dee6f8b179c5.mp4)
 
-../../assets/1d069148dc69a8c2d0d6656737b4ff373934ef9b19108c404c4da4812f6eadfb.mp4
+[Open saved attachment](../../assets/1d069148dc69a8c2d0d6656737b4ff373934ef9b19108c404c4da4812f6eadfb.mp4)
 
-../../assets/3fabff28ac9bddf1aaf0d3c12acdee2d6f2d51045efc5a6adb43801d8597e096.mp4
+[Open saved attachment](../../assets/3fabff28ac9bddf1aaf0d3c12acdee2d6f2d51045efc5a6adb43801d8597e096.mp4)
 
-../../assets/12a27a3589925408767f4aef809a8743b337edb7224ea3e96cf28bf5fd031b10.mp4
+[Open saved attachment](../../assets/12a27a3589925408767f4aef809a8743b337edb7224ea3e96cf28bf5fd031b10.mp4)
 
-../../assets/89ad3a72f660f58809a630afd2ac7e3e1363c6e72e85c3e2d55d296b7f609cda.mp4
+[Open saved attachment](../../assets/89ad3a72f660f58809a630afd2ac7e3e1363c6e72e85c3e2d55d296b7f609cda.mp4)
 
-../../assets/0261d5ce78ef28eb7f5e7951d78ebe9af0b6161e61fd301f54ce46b473c7a011.mp4
+[Open saved attachment](../../assets/0261d5ce78ef28eb7f5e7951d78ebe9af0b6161e61fd301f54ce46b473c7a011.mp4)
 
-../../assets/43e0d69c830c5b19f42b1dce4f11684e5adef3a838a91291c13d9d98f3dd8e6a.mp4
+[Open saved attachment](../../assets/43e0d69c830c5b19f42b1dce4f11684e5adef3a838a91291c13d9d98f3dd8e6a.mp4)
 
-../../assets/5e11c3feb3ded6681539c53beb3fb592ad81cfd5d27e34d462c6314c728d282e.mp4
+[Open saved attachment](../../assets/5e11c3feb3ded6681539c53beb3fb592ad81cfd5d27e34d462c6314c728d282e.mp4)
 
-../../assets/6cee4a8696e9205291816caa11dcd16edb3e4bfb7f015f3f767ea3eaaa3112ed.mp4
+[Open saved attachment](../../assets/6cee4a8696e9205291816caa11dcd16edb3e4bfb7f015f3f767ea3eaaa3112ed.mp4)
 
-../../assets/6d1b6caf0c7ca22e4c2092a71222718d8af691a0f0a0dd3e1c10bd9d8d7f7468.mp4
+[Open saved attachment](../../assets/6d1b6caf0c7ca22e4c2092a71222718d8af691a0f0a0dd3e1c10bd9d8d7f7468.mp4)
 
-../../assets/5b6ba20d736a0163fcf637e1e68ab794ce9dd2e5bcee7686d8ec3d315887d188.mp4
+[Open saved attachment](../../assets/5b6ba20d736a0163fcf637e1e68ab794ce9dd2e5bcee7686d8ec3d315887d188.mp4)
 
-../../assets/d92bb940d2344314d80581f8a87054c294f6d8c13342204ad5487de5e9baa1d5.mp4
+[Open saved attachment](../../assets/d92bb940d2344314d80581f8a87054c294f6d8c13342204ad5487de5e9baa1d5.mp4)
 
-../../assets/4102a89b29a249b30d21dd669e7fdb74f3d56e92489253341afdee6bd7ed096a.mp4
+[Open saved attachment](../../assets/4102a89b29a249b30d21dd669e7fdb74f3d56e92489253341afdee6bd7ed096a.mp4)
 
-../../assets/6114049ed3d4a87416c193cc7a6b5f15546cd176f79de2749ff7cb80c915db58.mp4
+[Open saved attachment](../../assets/6114049ed3d4a87416c193cc7a6b5f15546cd176f79de2749ff7cb80c915db58.mp4)
 
-../../assets/25f9044dbba368de08df002f9f709b4c55bae5c0ab809a4e78ce37e1075fcf69.mp4
+[Open saved attachment](../../assets/25f9044dbba368de08df002f9f709b4c55bae5c0ab809a4e78ce37e1075fcf69.mp4)
 
-../../assets/ebc6ec4916adc50240cecf40752a07e7172f590fd65eb3c1e86a4be267e8bacf.mp4
+[Open saved attachment](../../assets/ebc6ec4916adc50240cecf40752a07e7172f590fd65eb3c1e86a4be267e8bacf.mp4)
 
-../../assets/80f6e6c8ba92986a864fe24f799e8c20692585410cf15ce8d8717e4bb5b82079.mp4
+[Open saved attachment](../../assets/80f6e6c8ba92986a864fe24f799e8c20692585410cf15ce8d8717e4bb5b82079.mp4)
 
-../../assets/1da949872da6846acd0188ddd80fe0a9795f562ed8de5ce85ec8f6d91d1213d4.mp4
+[Open saved attachment](../../assets/1da949872da6846acd0188ddd80fe0a9795f562ed8de5ce85ec8f6d91d1213d4.mp4)
 
-../../assets/f459d9bde7482bd97950e3a8ffc07ca9e1faedc1522bc20a91b636e4a9a491b2.mp4
+[Open saved attachment](../../assets/f459d9bde7482bd97950e3a8ffc07ca9e1faedc1522bc20a91b636e4a9a491b2.mp4)
 
-../../assets/50e39670b2eb8b32bc3929aa6f93fbd990d19fb69ed1494c1417b14e66b13e85.mp4
+[Open saved attachment](../../assets/50e39670b2eb8b32bc3929aa6f93fbd990d19fb69ed1494c1417b14e66b13e85.mp4)
 
-../../assets/a4b7a4ef2946f34012687cbb7c69d17ac01ecf2d2f84d5b928897dd0407fb110.mp4
+[Open saved attachment](../../assets/a4b7a4ef2946f34012687cbb7c69d17ac01ecf2d2f84d5b928897dd0407fb110.mp4)
 
-../../assets/8068ac4e44be188700c2bf71cec56f3b157101caf1b435d7e7626adafaab4813.mp4
+[Open saved attachment](../../assets/8068ac4e44be188700c2bf71cec56f3b157101caf1b435d7e7626adafaab4813.mp4)
 
-../../assets/8bf4b24c2bddaaa6916715ca0025e4e1919845d4271aa3dc2d404da64eeb64f0.mp4
+[Open saved attachment](../../assets/8bf4b24c2bddaaa6916715ca0025e4e1919845d4271aa3dc2d404da64eeb64f0.mp4)
 
 
 ### attogram — 2026-09-13T08:32:22Z
@@ -231,4 +231,18 @@ This snapshot contains 60 issues, 2 PRs, 165 conversation comments, 4 releases, 
 The pipeline ran locally and published the result to GitHub. The supplied mobile-triggerable Actions workflow remains unverified on a hosted runner: GitHub returned HTTP 500 on three dispatch attempts and created no run. That limitation is documented in the PR.
 
 Please confirm whether this demonstration meets the €100 acceptance criteria, or whether you also require a successful hosted run, and which payout method you support. AI-assisted implementation by Codex for Roman Vinogradov (@sapph1re).
+
+
+
+### Manntouu — 2026-09-13T09:40:05Z
+
+
+I have a tested candidate for this €100 bounty, AI-assisted by Codex for @Manntouu.
+
+Source and validation: https://github.com/Manntouu/scaffolds/tree/bounty/repository-archive-tool/tools
+Actual archive: https://github.com/Manntouu/scaffolds/tree/bounty/repository-archive-data/repository-dump
+
+The full local execution finished at 09:20 UTC: 60 issues (including #60), 4 PRs, 167 conversation comments, 4 releases and 4 tags, plus root-README attachments. It saved 399 attachment URLs in 400 parts, totaling 1,880,901,820 bytes, with zero failures. All sizes and SHA-256 checksums were independently verified; 14 tests pass. The export preserves JSON, readable pages, source-to-file mappings and explicit failure reports. The manual Actions workflow is supplied but has not yet run on a hosted runner.
+
+GitHub's fork and new-repository forms repeatedly returned server errors, so I published reviewable source and data on separate branches in my existing fork. I recognize this is not yet the requested fork/PR submission. May you review this evidence while I resolve the fork step, or accept a patch if the server error persists? Is PayPal supported for payment after acceptance? No award or payment is assumed.
 

@@ -6,7 +6,7 @@ State: open
 Created: 2026-09-11T11:22:15Z
 
 
-../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4
+[Open saved attachment](../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4)
 
 Gemini
 
@@ -147,7 +147,7 @@ Which petition or track asset do you want to write to the ledger next?
 ### attogram — 2026-09-11T11:55:15Z
 
 
-../../assets/77f1b21969df3ade1a94725d2235a8e1c21959f8f1bc778efa075286068c0f99.mp4
+[Open saved attachment](../../assets/77f1b21969df3ade1a94725d2235a8e1c21959f8f1bc778efa075286068c0f99.mp4)
 
 Gemini
 
@@ -164,7 +164,7 @@ Observation: crow landed on edge of picnic bench.  Eyed me.  I said "well hello.
 ### attogram — 2026-09-11T11:59:04Z
 
 
-../../assets/465404d0be4f1b0651f268a21e9a0a60b223a7a02d6267c443e4dee6f8b179c5.mp4
+[Open saved attachment](../../assets/465404d0be4f1b0651f268a21e9a0a60b223a7a02d6267c443e4dee6f8b179c5.mp4)
 
 
 ### attogram — 2026-09-11T12:05:27Z

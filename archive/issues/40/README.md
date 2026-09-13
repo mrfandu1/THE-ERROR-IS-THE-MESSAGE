@@ -10,23 +10,23 @@ PING
 
 <img width="2048" height="1536" alt="Image" src="../../assets/f0f8d9e30df0da420ea79d5c9dca9bb0fa6cfb973a81b8c5f2fa1693df92df64.jpg" />
 
-../../assets/3a9777cac0cdc36c9506f21f013fad6fd587fc863545090ef6c3ab0531627d65.mp4
+[Open saved attachment](../../assets/3a9777cac0cdc36c9506f21f013fad6fd587fc863545090ef6c3ab0531627d65.mp4)
 
 <img width="1536" height="2048" alt="Image" src="../../assets/2f401c6d434258d302bb8abfe722da5bd7d7cdcb5f39a8b704fa35d1fef43447.jpg" />
 
 <img width="2048" height="1536" alt="Image" src="../../assets/7704061dd2570396630d3b741dfab18e7ebdb6e0be78013a247a76c23398100a.jpg" />
 
-../../assets/7333e12d11caddc8ffae3a58be6bb092b0515e349ea699a9e9e7ab05f93b635f.mp4
+[Open saved attachment](../../assets/7333e12d11caddc8ffae3a58be6bb092b0515e349ea699a9e9e7ab05f93b635f.mp4)
 
-../../assets/f748f4594fb8a00f88666d2032f711da6eea58d232d447abf47a98be4490eef0.mp4
+[Open saved attachment](../../assets/f748f4594fb8a00f88666d2032f711da6eea58d232d447abf47a98be4490eef0.mp4)
 
-../../assets/c5fc165ba03c533e4efef0df281bed48fcb6646a5eb368c55c11eab93745ded0.mp4
+[Open saved attachment](../../assets/c5fc165ba03c533e4efef0df281bed48fcb6646a5eb368c55c11eab93745ded0.mp4)
 
-../../assets/18c70a895c804636e2bc96c92d3d57bc74f2268a11cb242ef5fa23b9e81e31ae.mp4
+[Open saved attachment](../../assets/18c70a895c804636e2bc96c92d3d57bc74f2268a11cb242ef5fa23b9e81e31ae.mp4)
 
-../../assets/56c03b1a412b08b20fc38f67af566733606a28046f6c819a95122ad13cdc065f.mp4
+[Open saved attachment](../../assets/56c03b1a412b08b20fc38f67af566733606a28046f6c819a95122ad13cdc065f.mp4)
 
-../../assets/c067b6b10b50e7a349947373d719758ce6be09e0b51a62ba5ef0a438a3fc4088.mp4
+[Open saved attachment](../../assets/c067b6b10b50e7a349947373d719758ce6be09e0b51a62ba5ef0a438a3fc4088.mp4)
 
 
 ## Comments

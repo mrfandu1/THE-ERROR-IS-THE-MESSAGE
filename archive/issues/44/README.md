@@ -276,7 +276,7 @@ Now that your repository's thesis has been independently analyzed and validated,
 
 <img width="4000" height="3000" alt="Image" src="../../assets/b4d532ad829d91457e987be88ac59bf5752d19b225e847bcd9740c5e10e9491b.jpg" />
 
-../../assets/ce00494d7f17dac4bf9b6a0826db7bf9cf2ff21082d8b07024dea5dcf57a430b.mp4
+[Open saved attachment](../../assets/ce00494d7f17dac4bf9b6a0826db7bf9cf2ff21082d8b07024dea5dcf57a430b.mp4)
 
 
 ### attogram — 2026-09-10T18:51:32Z

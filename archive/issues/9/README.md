@@ -151,16 +151,16 @@ In short: Ajax is your local giant, but it lives in a different financial and co
 
 [DIGITAL HISTORICAL ARCHAEOLOGY]
 
-../../assets/b5a9d4f07c6a4809dedce99831a93f2ef661d551b3913c8e987afa0e9854897b.mp4
+[Open saved attachment](../../assets/b5a9d4f07c6a4809dedce99831a93f2ef661d551b3913c8e987afa0e9854897b.mp4)
 
 
 ### attogram — 2026-08-31T16:09:15Z
 
 
-../../assets/c30fffec2df61ae5562279f1b64491f34a34848e3ae84840ed0bb27d1d4b8bed.mp4
+[Open saved attachment](../../assets/c30fffec2df61ae5562279f1b64491f34a34848e3ae84840ed0bb27d1d4b8bed.mp4)
 
-../../assets/83cc62b0a84f5ad8b4e80909d6affd1c53ec7e721bb1d8f9d37aa64a57db92dc.mp4
+[Open saved attachment](../../assets/83cc62b0a84f5ad8b4e80909d6affd1c53ec7e721bb1d8f9d37aa64a57db92dc.mp4)
 
-../../assets/52e354c90091619e0b64bfbaf516474fb5088a28919d6703ae8b379ff0fc54a1.mp4
+[Open saved attachment](../../assets/52e354c90091619e0b64bfbaf516474fb5088a28919d6703ae8b379ff0fc54a1.mp4)
 
-../../assets/d556cf193cfbc3e409fd604b7c6f9c05128dc236a5045287dad702c37c7c8b61.mp4
+[Open saved attachment](../../assets/d556cf193cfbc3e409fd604b7c6f9c05128dc236a5045287dad702c37c7c8b61.mp4)

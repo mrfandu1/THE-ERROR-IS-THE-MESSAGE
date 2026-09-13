@@ -22,4 +22,4 @@ Created: 2026-08-31T16:13:47Z
 
 <img width="1080" height="2340" alt="Image" src="../../assets/e71651c8d726bc5a06e4978d3c3acf0dd4c27d8074404984f46dedc0caf5bc7e.jpg" />
 
-../../assets/559a3c389bbb9dc558fe23dcb0bbefecbfb1b5405cac6f5464b447059e463fcc.mp4
+[Open saved attachment](../../assets/559a3c389bbb9dc558fe23dcb0bbefecbfb1b5405cac6f5464b447059e463fcc.mp4)

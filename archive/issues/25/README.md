@@ -18,9 +18,9 @@ Created: 2026-09-04T08:04:35Z
 
 https://github.com/user-attachments/assets/8ff6d8db-a6f1-4315-a5d8-307971639305
 
-../../assets/559a3c389bbb9dc558fe23dcb0bbefecbfb1b5405cac6f5464b447059e463fcc.mp4
+[Open saved attachment](../../assets/559a3c389bbb9dc558fe23dcb0bbefecbfb1b5405cac6f5464b447059e463fcc.mp4)
 
-../../assets/fd186b822cb46959ae6b0bf651d117c26b49ae0e436f62c1b0deaa4d0a1bccba.mp4
+[Open saved attachment](../../assets/fd186b822cb46959ae6b0bf651d117c26b49ae0e436f62c1b0deaa4d0a1bccba.mp4)
 
 <img width="385" height="296" alt="Image" src="../../assets/f298f24a0ce99be8449f89ae7e8131c6a715757619f32b7d48f21a58b4bb1bc1.webp" />
 <img width="4000" height="3000" alt="Image" src="../../assets/be3758781f64f3bcd5970f85994ceb118276d8ce24a79a4035c4b0a2208527b8.jpg" />
@@ -54,10 +54,10 @@ https://github.com/user-attachments/assets/8ff6d8db-a6f1-4315-a5d8-307971639305
 
 <img width="3000" height="4000" alt="Image" src="../../assets/54aa49b6ff1d801e9c932cc381328ac9e9d9a49fb3176e8e69ccd2381fd73fa3.jpg" />
 
-../../assets/f509225e298f84599c06ad00b81b1e403c438f03706d70db2605fd150403d2c4.mp4
+[Open saved attachment](../../assets/f509225e298f84599c06ad00b81b1e403c438f03706d70db2605fd150403d2c4.mp4)
 
-../../assets/5a50f719cca084f0fce3da440740d1e9e867ecdd776c9b666eb1fa1b03a14339.mp4
+[Open saved attachment](../../assets/5a50f719cca084f0fce3da440740d1e9e867ecdd776c9b666eb1fa1b03a14339.mp4)
 
-../../assets/55e9a2d113aa758a9715d69b1e7b040c6737a5c582cded03004574c816e957c2.mp4
+[Open saved attachment](../../assets/55e9a2d113aa758a9715d69b1e7b040c6737a5c582cded03004574c816e957c2.mp4)
 
-../../assets/fa400a2ca7691ca5b56800038c7f7e3464601cc7ff277ed9b38d2703b0f61919.mp4
+[Open saved attachment](../../assets/fa400a2ca7691ca5b56800038c7f7e3464601cc7ff277ed9b38d2703b0f61919.mp4)

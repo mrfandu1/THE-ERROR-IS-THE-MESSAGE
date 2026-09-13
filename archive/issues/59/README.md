@@ -73,4 +73,4 @@ What's playing in the background right now while you chill out?
 ### attogram — 2026-09-12T16:05:49Z
 
 
-../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4
+[Open saved attachment](../../assets/71f7f50a8551afdd188060498cde1c65e0e34f7e502362005e5b5573efb4d463.mp4)

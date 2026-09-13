@@ -180,7 +180,7 @@ But as a THE-ERROR-IS-THE-MESSAGE artifact, #18 is doing something useful: it re
 
 Gemini
 
-../../assets/e46d8c323dc7d6bce3d059989ff53faba6587bc711080ac3ac431f1262b98c77.mp4
+[Open saved attachment](../../assets/e46d8c323dc7d6bce3d059989ff53faba6587bc711080ac3ac431f1262b98c77.mp4)
 
 
 ### attogram — 2026-09-01T13:10:27Z
