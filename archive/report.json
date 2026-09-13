@@ -1,20 +1,10 @@
 {
-  "repository": "attogram/THE-ERROR-IS-THE-MESSAGE",
-  "started_at": "2026-09-13T09:48:42.736111+00:00",
-  "complete": true,
-  "errors": [],
-  "counts": {
-    "issues": 60,
-    "pull_requests": 6,
-    "issue_comments": 169,
-    "reviews": 0,
-    "review_comments": 0,
-    "releases": 4,
-    "tags": 4,
-    "saved_assets": 401,
-    "failed_assets": 0
-  },
-  "scope": "Current accessible GitHub API records, including open and closed issues and PRs, reviews, release assets, and GitHub-hosted uploads. Deleted records and historical edits are not exposed by these APIs.",
-  "finished_at": "2026-09-13T09:48:58.166449+00:00",
-  "api_requests_this_run": 41
+  "complete": false,
+  "publication_in_progress": true,
+  "errors": [
+    {
+      "source": "publication",
+      "error": "Publication has not finished; see the Actions run."
+    }
+  ]
 }
