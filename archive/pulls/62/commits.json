@@ -368,5 +368,87 @@
         "html_url": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/commit/4c5da1480b6a3a3a492576041d9868b0f2679659"
       }
     ]
+  },
+  {
+    "sha": "9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
+    "node_id": "C_kwDOUY0LEtoAKDllNDkzNmUwOTZlM2ZjODBlZDZjYTlmNzFlYWI5YTc5Zjg3NDU3ZTg",
+    "commit": {
+      "author": {
+        "name": "Roman Vinogradov",
+        "email": "sapph1re@users.noreply.github.com",
+        "date": "2026-09-13T10:39:28Z"
+      },
+      "committer": {
+        "name": "Roman Vinogradov",
+        "email": "sapph1re@users.noreply.github.com",
+        "date": "2026-09-13T10:39:28Z"
+      },
+      "message": "Make asset restoration recover safely after corruption",
+      "tree": {
+        "sha": "4b3dc9558ee9117db364c698f6a8b911a5e8da24",
+        "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/git/trees/4b3dc9558ee9117db364c698f6a8b911a5e8da24"
+      },
+      "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/git/commits/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
+    "html_url": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/commit/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
+    "comments_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8/comments",
+    "author": {
+      "login": "sapph1re",
+      "id": 5317413,
+      "node_id": "MDQ6VXNlcjUzMTc0MTM=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5317413?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sapph1re",
+      "html_url": "https://github.com/sapph1re",
+      "followers_url": "https://api.github.com/users/sapph1re/followers",
+      "following_url": "https://api.github.com/users/sapph1re/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sapph1re/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sapph1re/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sapph1re/subscriptions",
+      "organizations_url": "https://api.github.com/users/sapph1re/orgs",
+      "repos_url": "https://api.github.com/users/sapph1re/repos",
+      "events_url": "https://api.github.com/users/sapph1re/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sapph1re/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "sapph1re",
+      "id": 5317413,
+      "node_id": "MDQ6VXNlcjUzMTc0MTM=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5317413?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/sapph1re",
+      "html_url": "https://github.com/sapph1re",
+      "followers_url": "https://api.github.com/users/sapph1re/followers",
+      "following_url": "https://api.github.com/users/sapph1re/following{/other_user}",
+      "gists_url": "https://api.github.com/users/sapph1re/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/sapph1re/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/sapph1re/subscriptions",
+      "organizations_url": "https://api.github.com/users/sapph1re/orgs",
+      "repos_url": "https://api.github.com/users/sapph1re/repos",
+      "events_url": "https://api.github.com/users/sapph1re/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/sapph1re/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "b5a314cad479a94efb7d4283dea7b446fc144c70",
+        "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/b5a314cad479a94efb7d4283dea7b446fc144c70",
+        "html_url": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/commit/b5a314cad479a94efb7d4283dea7b446fc144c70"
+      }
+    ]
   }
 ]

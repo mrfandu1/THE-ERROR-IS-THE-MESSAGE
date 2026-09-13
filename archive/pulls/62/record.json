@@ -10,7 +10,7 @@
   "review_comments_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/pulls/62/comments",
   "review_comment_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/pulls/comments{/number}",
   "comments_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/issues/62/comments",
-  "statuses_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/statuses/b5a314cad479a94efb7d4283dea7b446fc144c70",
+  "statuses_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/statuses/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
   "number": 62,
   "state": "open",
   "locked": false,
@@ -36,15 +36,15 @@
     "user_view_type": "public",
     "site_admin": false
   },
-  "body": "For #60, this exports repository conversations, releases and uploaded media into the repository, with a manually triggered workflow for mobile use.\n\nLive demonstration: [archive branch on my fork](https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/tree/repository-archive/archive). The snapshot contains 60 issues, 2 PRs, 165 conversation comments, 4 releases, and 401 downloaded files totaling 1,895,824,852 bytes. All files were reconstructed and verified against their part and full-file SHA-256 checksums. The archive includes the [run manifest](https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/blob/repository-archive/archive/manifest.json), [asset manifest](https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/blob/repository-archive/archive/assets-manifest.json), and [verification record](https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/blob/repository-archive/archive/verification.json).\n\nThe Python implementation has no third-party dependencies. It paginates open and closed issues/PRs, conversation comments, reviews and inline review comments, release assets and tags. Original JSON and Markdown are retained alongside a readable index. Uploaded files are never executed. Assets use 40 MiB parts and checksums; restoration gives media usable filenames and extensions. Publication uses 256 MiB batches, with an incomplete marker until the final manifest is committed. A targeted retry command recovers failed assets without rereading successful metadata or redownloading successful files.\n\nValidation: 10 local tests pass, covering pagination, attachment recognition, credential stripping on redirects, chunk reconstruction and corruption, download limits, incomplete metadata, targeted retries, restored filenames, and batched publication against a local bare Git remote. The live export initially exposed missing GitHub download hosts; those were corrected, and the eight release ZIP/tar downloads recovered on retry. The final snapshot has zero recorded failures. It is a dated, non-atomic API snapshot; the README documents scope and storage limits.\n\nHosted-workflow limitation: the demonstration pipeline was executed locally and published to GitHub. Two dispatch attempts on my public fork returned GitHub HTTP 500 and created no Actions run, despite Actions being enabled. The supplied mobile-triggerable workflow therefore has not yet been verified on a hosted runner. This is not a claim that hosted CI passed.\n\nAI-assisted implementation by Codex for Roman Vinogradov (@sapph1re), submitted for the stated €100 bounty. Please confirm whether this live pipeline demonstration meets your acceptance requirements, or whether you require a successful hosted run as well, and which payout method you support.\n",
+  "body": "For #60, this exports repository conversations, releases and uploaded media into the repository, with a manually triggered workflow for mobile use.\n\nHosted demonstration now passed: https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/actions/runs/34750562832 completed export and publication in 4m7s. Its newer snapshot is https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE/tree/f60a65c5619d227b59b928ded34367812fc2ebb8/archive (60 issues, 7 PRs, 4 releases, 401 assets, 1,895,824,852 bytes, zero failures). Local verification of the remote asset manifest and full Git tree matched all 406 hosted part blob IDs to SHA-256-verified bytes and all 401 full-file hashes. The workflow performs export and publication; restoration/integrity checks and the original 10 implementation tests were run locally. Earlier dispatch errors are resolved.\n\nThe Python implementation has no third-party dependencies. It paginates open and closed issues/PRs, conversation comments, reviews and inline review comments, release assets and tags. Original JSON and Markdown are retained alongside a readable index. Uploaded files are never executed. Assets use 40 MiB parts and checksums; restoration gives media usable filenames and extensions. Publication uses 256 MiB batches, with an incomplete marker until the final manifest is committed. A targeted retry command recovers failed assets without rereading successful metadata or redownloading successful files.\n\nValidation: 11 local tests pass, covering pagination, attachment recognition, credential stripping on redirects, chunk reconstruction and corruption, download limits, incomplete metadata, targeted retries, restored filenames, and batched publication against a local bare Git remote. The live export initially exposed missing GitHub download hosts; those were corrected, and the eight release ZIP/tar downloads recovered on retry. The final snapshot has zero recorded failures. It is a dated, non-atomic API snapshot; the README documents scope and storage limits.\n\nRestoration follow-up (9e4936e): a corrupt part previously left a partial destination file that blocked a retry. Output is now published only after verification; retry checks and skips completed files, removes failed temporary output, and refuses to overwrite differing user files. The new two-asset regression failed before the fix and passes afterward, including preservation of an edited destination. All 11 local tests pass. Atomic publication requires hard-link support, documented for APFS/ext4. The hosted export above ran at b5a314c; this follow-up changes only the local restore path, its tests, and documentation, not the exporter or workflow.\n\nAI-assisted implementation by Codex for Roman Vinogradov (@sapph1re), submitted for the stated €100 bounty. Please confirm acceptance for the stated bounty and which payout method you support.\n",
   "labels": [],
   "milestone": null,
   "active_lock_reason": null,
   "created_at": "2026-09-13T08:42:28Z",
-  "updated_at": "2026-09-13T09:09:57Z",
+  "updated_at": "2026-09-13T10:57:12Z",
   "closed_at": null,
   "merged_at": null,
-  "merge_commit_sha": "c206912726d47d617b7888d0ac1243a6b0081758",
+  "merge_commit_sha": "4f4af769f8d3667df1d49a5ef37826ea5fca0d03",
   "assignee": null,
   "assignees": [],
   "requested_reviewers": [],
@@ -95,7 +95,7 @@
       "watchers": 0,
       "open_issues_count": 0,
       "open_issues": 0,
-      "size": 1525284,
+      "size": 1472704,
       "default_branch": "main",
       "has_issues": false,
       "has_projects": true,
@@ -104,7 +104,7 @@
       "has_downloads": false,
       "has_discussions": false,
       "has_pull_requests": true,
-      "pushed_at": "2026-09-13T09:08:42Z",
+      "pushed_at": "2026-09-13T10:39:30Z",
       "created_at": "2026-09-13T08:38:05Z",
       "updated_at": "2026-09-13T09:06:19Z",
       "allow_forking": true,
@@ -161,7 +161,7 @@
       "hooks_url": "https://api.github.com/repos/sapph1re/THE-ERROR-IS-THE-MESSAGE/hooks",
       "svn_url": "https://github.com/sapph1re/THE-ERROR-IS-THE-MESSAGE"
     },
-    "sha": "b5a314cad479a94efb7d4283dea7b446fc144c70",
+    "sha": "9e4936e096e3fc80ed6ca9f71eab9a79f87457e8",
     "user": {
       "login": "sapph1re",
       "id": 5317413,
@@ -223,13 +223,13 @@
       "visibility": "public",
       "is_template": false,
       "topics": [],
-      "forks_count": 10,
-      "forks": 10,
+      "forks_count": 16,
+      "forks": 16,
       "stargazers_count": 0,
       "watchers_count": 0,
       "watchers": 0,
-      "open_issues_count": 66,
-      "open_issues": 66,
+      "open_issues_count": 75,
+      "open_issues": 75,
       "size": 38591,
       "default_branch": "main",
       "has_issues": true,
@@ -327,7 +327,7 @@
       "href": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/pulls/62/commits"
     },
     "statuses": {
-      "href": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/statuses/b5a314cad479a94efb7d4283dea7b446fc144c70"
+      "href": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/statuses/9e4936e096e3fc80ed6ca9f71eab9a79f87457e8"
     },
     "html": {
       "href": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/pull/62"
@@ -356,8 +356,8 @@
   "comments": 0,
   "review_comments": 0,
   "maintainer_can_modify": true,
-  "commits": 5,
-  "additions": 695,
+  "commits": 6,
+  "additions": 736,
   "deletions": 0,
   "changed_files": 10
 }

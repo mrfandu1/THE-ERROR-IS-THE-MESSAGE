@@ -1,0 +1,84 @@
+[
+  {
+    "sha": "b8660ab0dc8da5ea42e7c3bc5f89c54515f41247",
+    "node_id": "C_kwDOUY65w9oAKGI4NjYwYWIwZGM4ZGE1ZWE0MmU3YzNiYzVmODljNTQ1MTVmNDEyNDc",
+    "commit": {
+      "author": {
+        "name": "glatinone",
+        "email": "93207632+glatinone@users.noreply.github.com",
+        "date": "2026-09-13T11:11:03Z"
+      },
+      "committer": {
+        "name": "glatinone",
+        "email": "93207632+glatinone@users.noreply.github.com",
+        "date": "2026-09-13T11:11:03Z"
+      },
+      "message": "add repo dump tool for bounty #60\n\nCo-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>",
+      "tree": {
+        "sha": "1f46e3cb949feaae567925e5fd626031dd1c56c4",
+        "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/git/trees/1f46e3cb949feaae567925e5fd626031dd1c56c4"
+      },
+      "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/git/commits/b8660ab0dc8da5ea42e7c3bc5f89c54515f41247",
+      "comment_count": 0,
+      "verification": {
+        "verified": false,
+        "reason": "unsigned",
+        "signature": null,
+        "payload": null,
+        "verified_at": null
+      }
+    },
+    "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/b8660ab0dc8da5ea42e7c3bc5f89c54515f41247",
+    "html_url": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/commit/b8660ab0dc8da5ea42e7c3bc5f89c54515f41247",
+    "comments_url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/b8660ab0dc8da5ea42e7c3bc5f89c54515f41247/comments",
+    "author": {
+      "login": "glatinone",
+      "id": 93207632,
+      "node_id": "U_kgDOBY48UA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93207632?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/glatinone",
+      "html_url": "https://github.com/glatinone",
+      "followers_url": "https://api.github.com/users/glatinone/followers",
+      "following_url": "https://api.github.com/users/glatinone/following{/other_user}",
+      "gists_url": "https://api.github.com/users/glatinone/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/glatinone/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/glatinone/subscriptions",
+      "organizations_url": "https://api.github.com/users/glatinone/orgs",
+      "repos_url": "https://api.github.com/users/glatinone/repos",
+      "events_url": "https://api.github.com/users/glatinone/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/glatinone/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "committer": {
+      "login": "glatinone",
+      "id": 93207632,
+      "node_id": "U_kgDOBY48UA",
+      "avatar_url": "https://avatars.githubusercontent.com/u/93207632?v=4",
+      "gravatar_id": "",
+      "url": "https://api.github.com/users/glatinone",
+      "html_url": "https://github.com/glatinone",
+      "followers_url": "https://api.github.com/users/glatinone/followers",
+      "following_url": "https://api.github.com/users/glatinone/following{/other_user}",
+      "gists_url": "https://api.github.com/users/glatinone/gists{/gist_id}",
+      "starred_url": "https://api.github.com/users/glatinone/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/glatinone/subscriptions",
+      "organizations_url": "https://api.github.com/users/glatinone/orgs",
+      "repos_url": "https://api.github.com/users/glatinone/repos",
+      "events_url": "https://api.github.com/users/glatinone/events{/privacy}",
+      "received_events_url": "https://api.github.com/users/glatinone/received_events",
+      "type": "User",
+      "user_view_type": "public",
+      "site_admin": false
+    },
+    "parents": [
+      {
+        "sha": "c3d0a1f7359dc306ebf603fa0b3caf111da7c6f2",
+        "url": "https://api.github.com/repos/attogram/THE-ERROR-IS-THE-MESSAGE/commits/c3d0a1f7359dc306ebf603fa0b3caf111da7c6f2",
+        "html_url": "https://github.com/attogram/THE-ERROR-IS-THE-MESSAGE/commit/c3d0a1f7359dc306ebf603fa0b3caf111da7c6f2"
+      }
+    ]
+  }
+]
