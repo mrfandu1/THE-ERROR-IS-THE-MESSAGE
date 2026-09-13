@@ -86,10 +86,20 @@ class GitHub:
     def open(self, url, binary=False):
         if not trusted_download(url):
             raise ValueError('Refusing an untrusted download URL')
+        parsed = urlsplit(url)
+        # Source-archive endpoints redirect to a binary but require the JSON
+        # media type at the API. octet-stream is specific to release assets.
+        asset_api = parsed.hostname == 'api.github.com' and '/releases/assets/' in parsed.path
+        accept = 'application/vnd.github+json'
+        if binary:
+            if asset_api:
+                accept = 'application/octet-stream'
+            elif parsed.hostname != 'api.github.com':
+                accept = '*/*'
         headers = {'User-Agent': 'repository-dump/1.0',
-                   'Accept': 'application/octet-stream' if binary else 'application/vnd.github+json',
+                   'Accept': accept,
                    'X-GitHub-Api-Version': '2022-11-28'}
-        if self.token and urlsplit(url).hostname in {'api.github.com', 'github.com'}:
+        if self.token and parsed.hostname == 'api.github.com':
             headers['Authorization'] = 'Bearer ' + self.token
         for attempt in range(4):
             try:
@@ -144,12 +154,20 @@ def uploaded_urls(text):
         while url.endswith(')') and url.count(')') > url.count('('):
             url = url[:-1]
         url = url.rstrip(']')
-        parsed = urlsplit(url)
+        try:
+            parsed = urlsplit(url)
+            if not trusted_download(url):
+                continue
+        except ValueError:
+            continue
         host = parsed.hostname or ''
+        uuid = r'[0-9a-fA-F]{8}(?:-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}'
         is_upload = ((host == 'github.com' and
-                      (parsed.path.startswith('/user-attachments/') or
-                       re.match(r'^/[^/]+/[^/]+/files/', parsed.path)))
-                     or host in {'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com'}
+                      (re.fullmatch(r'/user-attachments/assets/' + uuid, parsed.path) or
+                       re.match(r'^/user-attachments/files/[0-9]+/[^/]+', parsed.path) or
+                       re.match(r'^/[^/]+/[^/]+/files/[0-9]+/[^/]+', parsed.path) or
+                       re.fullmatch(r'/[^/]+/[^/]+/assets/[0-9]+/' + uuid, parsed.path)))
+                     or host in {'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com', 'secured-user-images.githubusercontent.com'}
                      or host.startswith('github-production-user-asset-'))
         if is_upload and trusted_download(url):
             found.add(urlunsplit(parsed._replace(fragment='')))
@@ -194,14 +212,14 @@ class Archive:
         except (OSError, ValueError, KeyError):
             return False
 
-    def download(self, url, name=None, expected_size=None):
+    def download(self, url, name=None, expected_size=None, version=None):
         if url in self.media:
             return
         previous = self.previous.get(url, {})
-        if previous.get('status') == 'saved' and self.cached(previous) and (expected_size is None or previous.get('bytes') == expected_size):
+        if previous.get('status') == 'saved' and previous.get('version') == version and self.cached(previous) and (expected_size is None or previous.get('bytes') == expected_size):
             self.media[url] = previous
             return
-        record = {'source': url, 'status': 'failed', 'parts': []}
+        record = {'source': url, 'status': 'failed', 'parts': [], 'version': version}
         temporary = self.output / 'assets' / (hashlib.sha256(url.encode()).hexdigest() + '.download')
         temporary.parent.mkdir(parents=True, exist_ok=True)
         try:
@@ -225,6 +243,8 @@ class Archive:
                     raise ValueError('Download size differs from release metadata')
                 disposition = response.headers.get('Content-Disposition', '')
             remote_name = name or (re.search(r'filename="?([^";]+)', disposition).group(1) if re.search(r'filename="?([^";]+)', disposition) else Path(urlsplit(url).path).name)
+            if not Path(remote_name).suffix:
+                remote_name += mimetypes.guess_extension(content_type) or '.bin'
             extension = Path(remote_name).suffix.lower()
             if not re.fullmatch(r'\.[a-z0-9]{1,10}', extension):
                 extension = mimetypes.guess_extension(content_type) or '.bin'
@@ -304,6 +324,7 @@ class Archive:
         pulls = self.github.pages(self.prefix + '/pulls?state=all&sort=created&direction=asc')
         releases = self.github.pages(self.prefix + '/releases')
         tags = self.github.pages(self.prefix + '/tags')
+        tag_versions = {tag['name']: tag['commit']['sha'] for tag in tags}
         write_json(self.output / 'tags.json', tags)
         write_json(self.output / 'issue-index.json', all_issues)
         write_json(self.output / 'issue-comments.json', comments)
@@ -343,12 +364,13 @@ class Archive:
             directory = self.output / 'releases' / str(release['id'])
             write_json(directory / 'record.json', release)
             for asset in assets:
-                self.download(asset['url'], name=asset['name'], expected_size=asset['size'])
+                self.download(asset['url'], name=asset['name'], expected_size=asset['size'], version=asset.get('digest') or asset.get('updated_at'))
             source_archives = []
             for field, extension in [('zipball_url', '.zip'), ('tarball_url', '.tar.gz')]:
                 if release.get(field):
                     archive_name = release['tag_name'] + extension
-                    self.download(release[field], name=archive_name)
+                    # A moved tag must not silently reuse its old source archive.
+                    self.download(release[field], name=archive_name, version=tag_versions.get(release['tag_name'], self.report['started_at']))
                     source_archives.append({'url': release[field], 'name': archive_name})
             sections = [f'# {release.get("name") or release["tag_name"]}',
                         'Tag: `' + release['tag_name'] + '`', self.localize(release.get('body')), '\n## Release assets\n']

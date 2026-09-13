@@ -36,7 +36,7 @@ class Opener:
 class FixtureAPI:
     def __init__(self):
         self.requests = 0
-        self.upload = 'https://github.com/user-attachments/assets/image-id'
+        self.upload = 'https://github.com/user-attachments/assets/12345678-1234-1234-1234-123456789abc'
         self.review_upload = 'https://github.com/user-attachments/files/11/review.json'
         self.release_url = 'https://api.github.com/repos/example/repo/releases/assets/33'
         self.binary_calls = []
@@ -174,12 +174,29 @@ class ArchiveTests(unittest.TestCase):
         self.assertEqual(archive.media[api.review_upload]['status'], 'saved')
 
     def test_upload_link_forms_and_external_url_exclusion(self):
-        a = 'https://github.com/user-attachments/assets/a'
+        a = 'https://github.com/user-attachments/assets/12345678-1234-1234-1234-123456789abc'
         b = 'https://github.com/user-attachments/files/12/file.pdf'
         c = 'https://user-images.githubusercontent.com/1/image.png'
         d = 'https://github.com/owner/repo/files/22/file.zip'
         body = f'![a]({a}) <img src="{b}">\n{c}\n[old]({d})\n{a}\nhttps://example.com/private'
         self.assertEqual(dump.uploaded_urls(body), sorted([a, b, c, d]))
+
+    def test_placeholder_and_malformed_urls_do_not_hide_real_legacy_uploads(self):
+        legacy = 'https://github.com/owner/repo/assets/123/12345678-1234-1234-1234-123456789abc'
+        body = 'https://github.com/user-attachments/assets/xxxx https://[malformed ' + legacy
+        self.assertEqual(dump.uploaded_urls(body), [legacy])
+
+    def test_moved_release_tag_invalidates_cached_source_archive(self):
+        api = FixtureAPI()
+        url = 'https://api.github.com/repos/example/repo/zipball/v1'
+        api.records['/releases'][0]['zipball_url'] = url
+        self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+        api.binary_calls.clear()
+        self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+        self.assertEqual(api.binary_calls, [])
+        api.records['/tags'][0]['commit']['sha'] = 'new-commit'
+        self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+        self.assertEqual(api.binary_calls, [url])
 
 
 class HTTPTests(unittest.TestCase):
@@ -198,12 +215,22 @@ class HTTPTests(unittest.TestCase):
             dump.GitHub(opener=opener).pages('/repos/a/b/issues')
 
     def test_authentication_only_goes_to_github_api_or_web_origin(self):
-        opener = Opener([Response(b'x'), Response(b'x')])
+        opener = Opener([Response(b'x'), Response(b'x'), Response(b'x')])
         api = dump.GitHub('test-token', opener)
         api.open('https://api.github.com/repos/a/b').close()
         api.open('https://user-images.githubusercontent.com/file').close()
+        api.open('https://github.com/user-attachments/assets/a').close()
         self.assertEqual(opener.requests[0].get_header('Authorization'), 'Bearer test-token')
         self.assertIsNone(opener.requests[1].get_header('Authorization'))
+        self.assertIsNone(opener.requests[2].get_header('Authorization'))
+
+    def test_source_archives_and_release_binaries_use_their_required_media_types(self):
+        opener = Opener([Response(b'x'), Response(b'x')])
+        api = dump.GitHub('test-token', opener)
+        api.open('https://api.github.com/repos/a/b/zipball/v1', binary=True).close()
+        api.open('https://api.github.com/repos/a/b/releases/assets/1', binary=True).close()
+        self.assertEqual(opener.requests[0].get_header('Accept'), 'application/vnd.github+json')
+        self.assertEqual(opener.requests[1].get_header('Accept'), 'application/octet-stream')
 
     def test_redirect_drops_auth_and_rejects_arbitrary_hosts(self):
         redirect = dump.SafeRedirect()

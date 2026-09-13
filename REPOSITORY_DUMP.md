@@ -66,7 +66,7 @@ records remain available on reruns, and previous archive commits retain prior
 snapshots. No source branch is overwritten and no force push is used.
 
 Downloads follow only HTTPS redirects to GitHub's API, upload storage, and
-source archive hosts. Tokens are stripped on cross-origin redirects and are
+source archive hosts. Tokens are sent only to the API and stripped on cross-origin redirects and are
 never written into the archive. Remote filenames cannot choose filesystem paths.
 The workflow does not execute anything from the exported discussions or files.
 
@@ -97,7 +97,7 @@ python tools/repository_dump.py --restore repository-dump --destination restored
 Restoration verifies all saved files before writing any restored asset and checks
 each reconstructed file's hash. Large files require this reconstruction step;
 normal-sized images, audio, PDFs, and other attachments are directly readable in
-the archive. The workflow pushes media in batches of at most 150 MiB, avoiding
+the archive. During publication, the remote report explicitly stays incomplete until the final commit. The workflow pushes media in batches of at most 64 MiB, avoiding
 GitHub's 2 GiB single-push limit. GitHub repository size quotas still apply to very
 large archives. Downloads use four concurrent requests; use `--workers 1` locally
 if you prefer lower network usage.

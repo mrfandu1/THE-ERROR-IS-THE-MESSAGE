@@ -57,51 +57,18 @@ jobs:
         run: python3 tools/repository_dump.py --verify "$ARCHIVE_PATH/archive"
 
       - name: Commit the archive back into this repository
+        id: publish
         shell: bash
         run: |
           git -C "$ARCHIVE_PATH" config user.name 'github-actions[bot]'
           git -C "$ARCHIVE_PATH" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # Keep each binary push small enough for GitHub's 2 GiB push limit.
-          python3 - <<'PY'
-          import os, subprocess
-          from pathlib import Path
-          root = Path(os.environ['ARCHIVE_PATH'])
-          branch = os.environ['ARCHIVE_BRANCH']
-          def git(*args):
-              return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True)
-          paths = sorted(set(p for p in git('ls-files', '--others', '--modified', '--exclude-standard', '-z', '--', 'archive/assets').stdout.split(b'\0') if p))
-          batch, size, number = [], 0, 0
-          def publish(files, number):
-              if not files:
-                  return
-              git('add', '--', *files)
-              changed = subprocess.run(['git', '-C', str(root), 'diff', '--cached', '--quiet']).returncode
-              if changed == 1:
-                  git('commit', '-m', f'Save uploaded media batch {number}')
-                  git('push', 'origin', f'HEAD:refs/heads/{branch}')
-              elif changed:
-                  raise RuntimeError('Cannot inspect staged archive files')
-          for raw in paths:
-              path = os.fsdecode(raw)
-              weight = (root / path).stat().st_size
-              if batch and size + weight > 150 * 1024 * 1024:
-                  number += 1
-                  publish(batch, number)
-                  batch, size = [], 0
-              batch.append(path)
-              size += weight
-          publish(batch, number + 1)
-          PY
-          git -C "$ARCHIVE_PATH" add -- archive
-          if ! git -C "$ARCHIVE_PATH" diff --cached --quiet; then
-            git -C "$ARCHIVE_PATH" commit -m 'Save repository conversations and uploaded media'
-            git -C "$ARCHIVE_PATH" push origin "HEAD:refs/heads/$ARCHIVE_BRANCH"
-          fi
+          python3 tools/publish_archive.py "$ARCHIVE_PATH"
 
       - name: Show export result
         if: always()
         env:
           EXPORT_OUTCOME: ${{ steps.export.outcome }}
+          PUBLISH_OUTCOME: ${{ steps.publish.outcome }}
         shell: bash
         run: |
           python3 - <<'PY'
@@ -114,11 +81,11 @@ jobs:
           archive_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/tree/repository-archive/archive"
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
               summary.write('# Repository export\n\n')
-              summary.write(('Complete' if report['complete'] else 'INCOMPLETE') + '\n\n')
+              summary.write(('Complete' if report['complete'] and os.environ['PUBLISH_OUTCOME'] == 'success' else 'INCOMPLETE') + '\n\n')
               summary.write(f'[Open the saved archive]({archive_url})\n\n')
               for name, count in report['counts'].items():
                   summary.write(f'- {name.replace("_", " ")}: {count}\n')
               summary.write('\nMissing downloads and API failures are recorded in `archive/report.json`.\n')
-          if not report['complete'] or os.environ['EXPORT_OUTCOME'] != 'success':
+          if not report['complete'] or os.environ['EXPORT_OUTCOME'] != 'success' or os.environ['PUBLISH_OUTCOME'] != 'success':
               raise SystemExit('Export incomplete; saved available data and failure report. Rerun to retry.')
           PY
