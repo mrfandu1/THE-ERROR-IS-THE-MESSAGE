@@ -1,7 +1,7 @@
 {
   "repository": "attogram/THE-ERROR-IS-THE-MESSAGE",
   "started_at": "2026-09-13T09:26:53.625962+00:00",
-  "complete": false,
+  "complete": true,
   "errors": [],
   "counts": {
     "issues": 60,
@@ -16,6 +16,5 @@
   },
   "scope": "Current accessible GitHub API records, including open and closed issues and PRs, reviews, release assets, and GitHub-hosted uploads. Deleted records and historical edits are not exposed by these APIs.",
   "finished_at": "2026-09-13T09:28:15.634327+00:00",
-  "api_requests_this_run": 437,
-  "publication_in_progress": true
+  "api_requests_this_run": 437
 }
