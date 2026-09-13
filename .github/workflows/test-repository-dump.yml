@@ -3,12 +3,16 @@ on:
   pull_request:
     paths:
       - 'tools/repository_dump.py'
+      - 'tools/publish_archive.py'
       - 'tests/test_repository_dump.py'
+      - 'tests/test_publish_archive.py'
       - '.github/workflows/*repository-dump.yml'
   push:
     paths:
       - 'tools/repository_dump.py'
+      - 'tools/publish_archive.py'
       - 'tests/test_repository_dump.py'
+      - 'tests/test_publish_archive.py'
       - '.github/workflows/*repository-dump.yml'
 permissions:
   contents: read

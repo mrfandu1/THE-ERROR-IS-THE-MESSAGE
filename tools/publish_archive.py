@@ -6,6 +6,11 @@ from pathlib import Path
 import subprocess
 import time
 
+if __package__:
+    from .repository_dump import read_json
+else:
+    from repository_dump import read_json
+
 
 def publish(root, branch='repository-archive', batch_bytes=64 * 1024 * 1024, sleep=time.sleep):
     root = Path(root).resolve()
@@ -15,6 +20,9 @@ def publish(root, branch='repository-archive', batch_bytes=64 * 1024 * 1024, sle
     def git(*args, capture=False, check=True):
         return subprocess.run(['git', '-C', str(root), *args], check=check,
                               stdout=subprocess.PIPE if capture else None)
+
+    if git('diff', '--cached', '--name-only', '-z', capture=True).stdout:
+        raise ValueError('Archive worktree must have an empty staging index before publication')
 
     def save(paths, message):
         for offset in range(0, len(paths), 100):
@@ -36,8 +44,9 @@ def publish(root, branch='repository-archive', batch_bytes=64 * 1024 * 1024, sle
     report_path = root / 'archive/report.json'
     readme_path = root / 'archive/README.md'
     final_report, final_readme = report_path.read_bytes(), readme_path.read_bytes()
-    report = json.loads(final_report)
-    report.update(complete=False, publication_in_progress=True)
+    read_json(report_path)  # Validate a possibly chunked final report before publication.
+    report = {'complete': False, 'publication_in_progress': True,
+              'errors': [{'source': 'publication', 'error': 'Publication has not finished; see the Actions run.'}]}
     report_path.write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
     readme_path.write_text('# Archive publication in progress\n\n'
                           'This branch is incomplete until the final publication commit. '
@@ -56,7 +65,7 @@ def publish(root, branch='repository-archive', batch_bytes=64 * 1024 * 1024, sle
             raise ValueError('Archive contains an unsafe path')
         size = path.stat().st_size if path.exists() else 0
         if size > 40 * 1024 * 1024:
-            raise ValueError('Unexpected oversized archive file; export must split large assets')
+            raise ValueError('Unexpected oversized archive file; export must split large files')
         if batch and weight + size > batch_bytes:
             save(batch, 'Save repository archive files')
             batch, weight = [], 0

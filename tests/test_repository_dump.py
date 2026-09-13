@@ -3,6 +3,8 @@ import io
 import json
 from pathlib import Path
 import tempfile
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Barrier
 import unittest
 from unittest.mock import patch
 from urllib.request import Request
@@ -186,6 +188,104 @@ class ArchiveTests(unittest.TestCase):
         body = 'https://github.com/user-attachments/assets/xxxx https://[malformed ' + legacy
         self.assertEqual(dump.uploaded_urls(body), [legacy])
 
+    def test_s3_bucket_names_are_not_discovered_as_body_uploads(self):
+        urls = [
+            'https://github-production-user-asset-attacker.s3.amazonaws.com/file',
+            'https://github-production-user-asset-1.example.com/file',
+            'https://github-cloud.s3.amazonaws.com/file',
+        ]
+        self.assertEqual(dump.uploaded_urls('\n'.join(urls)), [])
+
+    def test_local_links_preserve_markdown_html_and_inline_punctuation(self):
+        api = FixtureAPI()
+        archive = dump.Archive(api, 'example/repo', self.root)
+        archive.download(api.upload)
+        url = api.upload
+        local = '../../' + archive.media[url]['parts'][0]['path']
+        link = f'[Open saved attachment]({local})'
+        cases = [
+            (f'See {url} for details.', f'See {link} for details.'),
+            (f'Watch ({url}), then listen: {url}.', f'Watch ({link}), then listen: {link}.'),
+            (url + '\n', link + '\n'),
+            (f'<{url}>', link),
+            (f'![image]({url})', f'![image]({local})'),
+            (f'[video](<{url}> "Title")', f'[video](<{local}> "Title")'),
+            (f'![image](<{url}>)', f'![image](<{local}>)'),
+            (f'<video src="{url}" poster=\'{url}\'></video>', f'<video src="{local}" poster=\'{local}\'></video>'),
+            (f'<a href={url}>file</a>', f'<a href={local}>file</a>'),
+            (f'[clip]: {url} "Title"', f'[clip]: {local} "Title"'),
+            (f'  [clip]: <{url}>', f'  [clip]: <{local}>'),
+        ]
+        for body, expected in cases:
+            with self.subTest(body=body):
+                self.assertEqual(archive.localize(body), expected)
+
+    def test_large_metadata_round_trip_cache_rerun_and_small_transition(self):
+        api = FixtureAPI()
+        body = '\u0928\u092e\u0938\u094d\u0924\u0947 \U0001f30d\n' * 300
+        api.records['/issues'][0]['body'] = body
+        with patch.object(dump, 'DOCUMENT_PART_SIZE', 512):
+            self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+            self.assertEqual(dump.verify(self.root), [])
+            for relative in ['issues/7/record.json', 'issues/7/README.md', 'assets.json', 'checksums.json']:
+                self.assertTrue((self.root / (relative + '.parts.json')).is_file(), relative)
+            self.assertEqual(dump.read_json(self.root / 'issues/7/record.json')['body'], body)
+            expected = {p.relative_to(self.root): dump.read_document(p)
+                        for p in self.root.rglob('*') if p.is_file() and p.suffix in ('.json', '.md')
+                        and p.with_name(p.name + '.parts.json').is_file()}
+            restored = Path(self.temporary.name) / 'restored'
+            dump.restore(self.root, restored)
+            for relative, original in expected.items():
+                self.assertEqual((restored / 'metadata' / relative).read_bytes(), original)
+            api.binary_calls.clear()
+            self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+            self.assertEqual(api.binary_calls, [])
+            self.assertEqual(dump.verify(self.root), [])
+            inventory = dump.read_json(self.root / 'checksums.json')
+            self.assertFalse(any(name.startswith('checksums.json') for name in inventory))
+            self.assertTrue(all(p.stat().st_size <= 512 for p in self.root.rglob('*') if p.is_file()))
+            api.records['/issues'][0]['body'] = 'small'
+            self.assertTrue(dump.Archive(api, 'example/repo', self.root).run()['complete'])
+            self.assertEqual(dump.verify(self.root), [])
+            self.assertEqual(dump.read_json(self.root / 'issues/7/record.json')['body'], 'small')
+            self.assertFalse((self.root / 'issues/7/record.json.parts').exists())
+            self.assertFalse((self.root / 'issues/7/record.json.parts.json').exists())
+
+    def test_corrupted_document_and_checksum_parts_prevent_restoration(self):
+        for relative in ['issue-comments.json', 'checksums.json']:
+            with self.subTest(relative=relative), patch.object(dump, 'DOCUMENT_PART_SIZE', 512):
+                api = FixtureAPI()
+                api.comment['body'] += ' Large comment' * 100
+                dump.Archive(api, 'example/repo', self.root).run()
+                part = self.root / (relative + '.parts/000001.part')
+                part.write_bytes(b'corrupted')
+                self.assertTrue(dump.verify(self.root))
+                with self.assertRaisesRegex(ValueError, 'verification failed'):
+                    dump.restore(self.root, Path(self.temporary.name) / 'corrupt-restore')
+
+    def test_concurrent_download_checkpoints_keep_complete_records(self):
+        api = FixtureAPI()
+        barrier = Barrier(4)
+        def concurrent_open(url, binary=False):
+            barrier.wait(timeout=10)
+            return Response(url.encode(), {'Content-Type': 'application/octet-stream'})
+        api.open = concurrent_open
+        archive = dump.Archive(api, 'example/repo', self.root)
+        urls = [f'https://github.com/user-attachments/files/{n}/sample.bin' for n in range(20)]
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            futures = [pool.submit(archive.download, url) for url in urls]
+            for future in as_completed(futures):
+                future.result()
+                snapshot = archive.media_snapshot()
+                dump.write_json(self.root / 'checkpoint.json', snapshot)
+                saved = dump.read_json(self.root / 'checkpoint.json')
+                for url, record in saved.items():
+                    self.assertEqual(record['status'], 'saved')
+                    self.assertEqual(record['bytes'], len(url.encode()))
+                    self.assertTrue(archive.cached(record))
+        self.assertEqual(set(archive.media_snapshot()), set(urls))
+        self.assertEqual(archive.report['errors'], [])
+
     def test_moved_release_tag_invalidates_cached_source_archive(self):
         api = FixtureAPI()
         url = 'https://api.github.com/repos/example/repo/zipball/v1'
@@ -240,6 +340,14 @@ class HTTPTests(unittest.TestCase):
         for url in ['https://example.com/a', 'http://github.com/a', 'https://127.0.0.1/a', 'https://github.com.evil.test/a', 'https://github.com:8080/a']:
             with self.subTest(url=url), self.assertRaises(ValueError):
                 redirect.redirect_request(request, None, 302, '', {}, url)
+
+    def test_github_upload_can_redirect_to_s3_without_credentials(self):
+        request = Request('https://github.com/user-attachments/assets/a',
+                          headers={'Authorization': 'Bearer test-token'})
+        url = 'https://github-production-user-asset-6210df.s3.amazonaws.com/file?signature=example'
+        redirected = dump.SafeRedirect().redirect_request(request, None, 302, '', {}, url)
+        self.assertEqual(redirected.full_url, url)
+        self.assertIsNone(redirected.get_header('Authorization'))
 
     def test_transient_rate_limit_retries_with_requested_delay(self):
         error = HTTPError('https://api.github.com', 429, 'rate limit', {'Retry-After': '3'}, None)

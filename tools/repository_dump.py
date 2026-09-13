@@ -14,6 +14,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from threading import Lock
 from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin, urlsplit, urlunsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
@@ -21,6 +22,9 @@ from urllib.request import Request, build_opener, HTTPRedirectHandler
 API = 'https://api.github.com'
 BLOCK_SIZE = 1024 * 1024
 PART_SIZE = 40 * BLOCK_SIZE  # GitHub's regular Git object limit is 100 MiB.
+DOCUMENT_PART_SIZE = 40 * BLOCK_SIZE
+CHUNK_MARKER = b'{"_repository_dump_chunked":true,'
+MARKDOWN_CHUNK_MARKER = b'<!-- repository-dump:chunked -->\n'
 URL_RE = re.compile(r'https://[^\s<>"\x27`]+')
 
 
@@ -41,10 +45,75 @@ def _hash_stream(source):
 
 
 def write_json(path, value):
+    write_document(path, (json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+
+
+def write_text(path, value):
+    write_document(path, value.encode('utf-8'))
+
+
+def clear_document_parts(path):
+    path.with_name(path.name + '.parts.json').unlink(missing_ok=True)
+    directory = path.with_name(path.name + '.parts')
+    if directory.exists():
+        for part in directory.glob('*.part'):
+            if re.fullmatch(r'[0-9]+\.part', part.name):
+                part.unlink()
+        directory.rmdir()
+
+
+def write_document(path, data):
+    """Keep every generated Git object bounded while preserving exact UTF-8 bytes."""
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
+    clear_document_parts(path)
+    if len(data) > DOCUMENT_PART_SIZE:
+        directory = path.with_name(path.name + '.parts')
+        directory.mkdir()
+        count = 0
+        for offset in range(0, len(data), DOCUMENT_PART_SIZE):
+            count += 1
+            (directory / f'{count:06d}.part').write_bytes(data[offset:offset + DOCUMENT_PART_SIZE])
+        manifest = {'format': 'repository-dump-parts-v1', 'bytes': len(data),
+                    'sha256': hashlib.sha256(data).hexdigest(), 'parts': count}
+        manifest_name = path.name + '.parts.json'
+        path.with_name(manifest_name).write_text(json.dumps(manifest) + '\n', encoding='utf-8')
+        if path.suffix == '.json':
+            data = CHUNK_MARKER + b'"manifest":' + json.dumps(manifest_name).encode('utf-8') + b'}\n'
+        else:
+            data = MARKDOWN_CHUNK_MARKER + (
+                '# Large archived document\n\nThis document is preserved as numbered binary parts. '
+                f'[Manifest]({manifest_name}). Restore its exact original bytes with '
+                '`python tools/repository_dump.py --restore ARCHIVE --destination RESTORED`; '
+                'the document will be under `RESTORED/metadata/`.\n').encode('utf-8')
     temporary = path.with_name(path.name + '.tmp')
-    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    temporary.write_bytes(data)
     temporary.replace(path)
+
+
+def read_document(path):
+    path = Path(path)
+    data = path.read_bytes()
+    if not data.startswith((CHUNK_MARKER, MARKDOWN_CHUNK_MARKER)):
+        return data
+    manifest = json.loads(safe_child(path.parent, path.name + '.parts.json').read_text(encoding='utf-8'))
+    if (not isinstance(manifest, dict) or manifest.get('format') != 'repository-dump-parts-v1'
+            or type(manifest.get('parts')) is not int or manifest['parts'] < 1
+            or type(manifest.get('bytes')) is not int or manifest['bytes'] < 1
+            or not isinstance(manifest.get('sha256'), str)
+            or not re.fullmatch(r'[0-9a-f]{64}', manifest['sha256'])):
+        raise ValueError('Invalid document parts manifest')
+    directory = safe_child(path.parent, path.name + '.parts')
+    result = bytearray()
+    for number in range(1, manifest['parts'] + 1):
+        result.extend(safe_child(directory, f'{number:06d}.part').read_bytes())
+    if len(result) != manifest['bytes'] or hashlib.sha256(result).hexdigest() != manifest['sha256']:
+        raise ValueError('Document parts checksum mismatch')
+    return bytes(result)
+
+
+def read_json(path):
+    return json.loads(read_document(path))
 
 
 def safe_child(root, relative):
@@ -167,8 +236,7 @@ def uploaded_urls(text):
                        re.match(r'^/user-attachments/files/[0-9]+/[^/]+', parsed.path) or
                        re.match(r'^/[^/]+/[^/]+/files/[0-9]+/[^/]+', parsed.path) or
                        re.fullmatch(r'/[^/]+/[^/]+/assets/[0-9]+/' + uuid, parsed.path)))
-                     or host in {'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com', 'secured-user-images.githubusercontent.com'}
-                     or host.startswith('github-production-user-asset-'))
+                     or host in {'user-images.githubusercontent.com', 'private-user-images.githubusercontent.com', 'secured-user-images.githubusercontent.com'})
         if is_upload and trusted_download(url):
             found.add(urlunsplit(parsed._replace(fragment='')))
     return sorted(found)
@@ -198,8 +266,9 @@ class Archive:
         if any(path.is_symlink() for path in self.output.rglob('*')):
             raise ValueError('Archive output contains symlinks; use a dedicated directory without symlinks')
         self.media = {}
+        self.media_lock = Lock()
         previous = self.output / 'assets.json'
-        self.previous = json.loads(previous.read_text(encoding='utf-8')) if previous.exists() else {}
+        self.previous = read_json(previous) if previous.exists() else {}
         self.report = {'repository': repository, 'started_at': timestamp(), 'complete': False,
                        'errors': [], 'counts': {}, 'scope': 'Current accessible GitHub API records, including open and closed issues and PRs, reviews, release assets, and GitHub-hosted uploads. Deleted records and historical edits are not exposed by these APIs.'}
 
@@ -213,11 +282,13 @@ class Archive:
             return False
 
     def download(self, url, name=None, expected_size=None, version=None):
-        if url in self.media:
-            return
+        with self.media_lock:
+            if url in self.media:
+                return
         previous = self.previous.get(url, {})
         if previous.get('status') == 'saved' and previous.get('version') == version and self.cached(previous) and (expected_size is None or previous.get('bytes') == expected_size):
-            self.media[url] = previous
+            with self.media_lock:
+                self.media[url] = previous
             return
         record = {'source': url, 'status': 'failed', 'parts': [], 'version': version}
         temporary = self.output / 'assets' / (hashlib.sha256(url.encode()).hexdigest() + '.download')
@@ -267,8 +338,14 @@ class Archive:
         except Exception as error:
             temporary.unlink(missing_ok=True)
             record['error'] = str(error)
-            self.report['errors'].append({'source': url, 'error': str(error)})
-        self.media[url] = record
+            with self.media_lock:
+                self.report['errors'].append({'source': url, 'error': str(error)})
+        with self.media_lock:
+            self.media[url] = record
+
+    def media_snapshot(self):
+        with self.media_lock:
+            return dict(self.media)
 
     def localize(self, body):
         body = body or ''
@@ -277,12 +354,15 @@ class Archive:
             if asset['status'] == 'saved' and len(asset['parts']) == 1:
                 local = '../../' + asset['parts'][0]['path']
                 link = '[Open saved attachment](' + local + ')'
-                # Relative paths are not autolinked by Markdown renderers.
-                # Preserve clickable bare video/audio URLs and <autolinks>.
-                body = re.sub(r'(?m)^[ \t]*' + re.escape(url) + r'[ \t]*\r?$',
-                              lambda match: link, body)
-                body = body.replace('<' + url + '>', link)
-                body = body.replace(url, local)
+                # Keep destinations inside Markdown links/reference definitions
+                # and HTML attributes; wrap all other occurrences as links.
+                pattern = re.compile(
+                    r'(?P<destination>\]\(\s*<?|\b(?:src|href|poster)\s*=\s*[\"\x27]?|'
+                    r'^[ \t]{0,3}\[[^\]\n]+\]:[ \t]*<?)' + re.escape(url) +
+                    r'|<' + re.escape(url) + r'>|(?P<bare>' + re.escape(url) + r')',
+                    re.MULTILINE | re.IGNORECASE)
+                body = pattern.sub(lambda match: (match.group('destination') + local)
+                                   if match.group('destination') is not None else link, body)
         return body
 
     def conversation(self, kind, number, item, comments, reviews=(), inline=()):
@@ -302,9 +382,11 @@ class Archive:
                     sections.append(f'\nFile: `{record["path"]}`; line: {record.get("line")}; reply to: {record.get("in_reply_to_id", "none")}\n')
                 if record.get('diff_hunk'):
                     sections.append('\n````diff\n' + record['diff_hunk'] + '\n````\n')
-        (directory / 'README.md').write_text('\n\n'.join(sections) + '\n', encoding='utf-8')
+        write_text(directory / 'README.md', '\n\n'.join(sections) + '\n')
 
     def run(self):
+        # Preserve attachment and metadata bytes even on Windows Git checkouts.
+        write_text(self.output / '.gitattributes', '* -text\n')
         write_json(self.output / 'report.json', self.report)
         try:
             self.collect()
@@ -318,7 +400,9 @@ class Archive:
         write_json(self.output / 'assets.json', self.media)
         write_json(self.output / 'report.json', self.report)
         self.index()
-        files = {p.relative_to(self.output).as_posix(): digest(p) for p in sorted(self.output.rglob('*')) if p.is_file() and p.name != 'checksums.json'}
+        # The checksum inventory cannot include its own previous representation.
+        clear_document_parts(self.output / 'checksums.json')
+        files = {p.relative_to(self.output).as_posix(): digest(p) for p in sorted(self.output.rglob('*')) if p.is_file() and p != self.output / 'checksums.json'}
         write_json(self.output / 'checksums.json', files)
         return self.report
 
@@ -363,8 +447,9 @@ class Archive:
             for index, future in enumerate(as_completed(pending), 1):
                 future.result()
                 print(f'Upload {index}/{len(uploads)}', flush=True)
-                # Each completed record is immutable; snapshot the map before serialization.
-                write_json(self.output / 'assets.json', dict(self.media))
+                # Completed records are immutable; take the map snapshot under
+                # the same lock used by download workers.
+                write_json(self.output / 'assets.json', self.media_snapshot())
         for release in releases:
             assets = self.github.pages(self.prefix + f'/releases/{release["id"]}/assets')
             release['assets'] = assets
@@ -387,7 +472,7 @@ class Archive:
                     sections.append(f'- [{asset["name"]}](../../{part["path"]})')
                 if saved['status'] != 'saved':
                     sections.append(f'- {asset["name"]}: DOWNLOAD FAILED (see report.json)')
-            (directory / 'README.md').write_text('\n\n'.join(sections) + '\n', encoding='utf-8')
+            write_text(directory / 'README.md', '\n\n'.join(sections) + '\n')
         for issue in issues:
             self.conversation('issues', issue['number'], issue, grouped.get(issue['number'], []))
         for detail, reviews, inline in pull_details:
@@ -403,19 +488,22 @@ class Archive:
         for kind in ('issues', 'pulls', 'releases'):
             lines.append('\n## ' + kind.title() + '\n')
             for record in sorted((self.output / kind).glob('*/record.json'), key=lambda p: int(p.parent.name)):
-                item = json.loads(record.read_text(encoding='utf-8'))
+                item = read_json(record)
                 title = (item.get('title') or item.get('name') or item.get('tag_name') or record.parent.name).replace('\n', ' ').replace('[', '\\[').replace(']', '\\]')
                 lines.append(f'- [{record.parent.name}: {title}]({kind}/{record.parent.name}/README.md)')
         if self.report['errors']:
             lines += ['\n## Missing data\n', 'Some data could not be preserved. This is **not a complete export**. See [report.json](report.json) for each failure; rerunning retries failed assets.']
-        lines += ['\n## Large files\n', 'Files over 40 MiB are saved as numbered parts to fit GitHub limits. The asset manifest preserves the original byte size and SHA-256. Reconstruct with `python tools/repository_dump.py --restore ARCHIVE_DIRECTORY --destination RESTORED_DIRECTORY`. No archive content is executed.',
+        lines += ['\n## Large files\n', 'Files over 40 MiB, including JSON and Markdown, are saved as numbered parts to fit GitHub limits. Manifests preserve the original byte size and SHA-256. Reconstruct with `python tools/repository_dump.py --restore ARCHIVE_DIRECTORY --destination RESTORED_DIRECTORY`; chunked documents are restored under `RESTORED_DIRECTORY/metadata/`. No archive content is executed.',
                   '\nOlder exported records are retained on reruns; the current counts reflect the current API snapshot. GitHub does not offer a transactionally consistent snapshot while contributors are editing.']
-        (self.output / 'README.md').write_text('\n\n'.join(lines) + '\n', encoding='utf-8')
+        write_text(self.output / 'README.md', '\n\n'.join(lines) + '\n')
 
 
 def verify(root):
     root = Path(root)
-    checksums = json.loads((root / 'checksums.json').read_text(encoding='utf-8'))
+    try:
+        checksums = read_json(root / 'checksums.json')
+    except (OSError, ValueError, KeyError):
+        return ['checksums.json']
     errors = []
     for relative, expected in checksums.items():
         try:
@@ -433,7 +521,7 @@ def restore(root, destination):
     if failures:
         raise ValueError('Archive verification failed; do not restore corrupted files')
     destination.mkdir(parents=True, exist_ok=True)
-    assets = json.loads((root / 'assets.json').read_text(encoding='utf-8'))
+    assets = read_json(root / 'assets.json')
     for record in assets.values():
         if record['status'] != 'saved':
             continue
@@ -448,6 +536,11 @@ def restore(root, destination):
         if digest(target) != record['sha256']:
             target.unlink()
             raise ValueError('Restored asset checksum mismatch')
+    for manifest in root.rglob('*.parts.json'):
+        original = manifest.with_name(manifest.name.removesuffix('.parts.json'))
+        target = safe_child(destination, 'metadata/' + original.relative_to(root).as_posix())
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_bytes(read_document(original))
 
 
 def main():
@@ -465,7 +558,7 @@ def main():
         return 1 if failures else 0
     if args.restore:
         restore(args.restore, args.destination)
-        print('Assets restored and checksums verified.')
+        print('Assets and chunked metadata restored; checksums verified.')
         return 0
     if not args.repo:
         parser.error('--repo is required for an export')

@@ -74,16 +74,17 @@ jobs:
           python3 - <<'PY'
           import json, os
           from pathlib import Path
+          from tools.repository_dump import read_json
           path = Path(os.environ.get('ARCHIVE_PATH', '')) / 'archive/report.json'
           if not path.is_file():
               raise SystemExit('No export report was produced; inspect the failed step above.')
-          report = json.loads(path.read_text())
+          report = read_json(path)
           archive_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/tree/repository-archive/archive"
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
               summary.write('# Repository export\n\n')
               summary.write(('Complete' if report['complete'] and os.environ['PUBLISH_OUTCOME'] == 'success' else 'INCOMPLETE') + '\n\n')
               summary.write(f'[Open the saved archive]({archive_url})\n\n')
-              for name, count in report['counts'].items():
+              for name, count in report.get('counts', {}).items():
                   summary.write(f'- {name.replace("_", " ")}: {count}\n')
               summary.write('\nMissing downloads and API failures are recorded in `archive/report.json`.\n')
           if not report['complete'] or os.environ['EXPORT_OUTCOME'] != 'success' or os.environ['PUBLISH_OUTCOME'] != 'success':
