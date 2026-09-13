@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 90
     env:
       ARCHIVE_BRANCH: repository-archive
-      SOURCE_REPOSITORY: ${{ inputs.source_repository || github.repository }}
+      SOURCE_REPOSITORY: ${{ inputs.source_repository || vars.REPOSITORY_DUMP_SOURCE || github.repository }}
     steps:
       - name: Get the export tool
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4

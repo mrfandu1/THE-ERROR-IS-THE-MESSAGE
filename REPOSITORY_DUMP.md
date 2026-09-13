@@ -25,6 +25,11 @@ the optional field. Data still goes into **your fork**. An Actions token normall
 cannot read a different private repository; export private data only from that
 repository itself, with appropriate token access.
 
+For repeated exports from the same different repository, a maintainer can set
+the Actions repository variable `REPOSITORY_DUMP_SOURCE` to `owner/repository`.
+Leaving the run field blank then uses that saved source; an explicit run field
+overrides it. Without the variable, a blank field means this repository.
+
 ## What is saved
 
 - Raw API JSON keeps original Unicode text and metadata without rewriting it.
