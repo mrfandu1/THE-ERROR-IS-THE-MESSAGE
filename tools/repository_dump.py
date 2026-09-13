@@ -275,7 +275,14 @@ class Archive:
         for url in sorted(self.media, key=len, reverse=True):
             asset = self.media[url]
             if asset['status'] == 'saved' and len(asset['parts']) == 1:
-                body = body.replace(url, '../../' + asset['parts'][0]['path'])
+                local = '../../' + asset['parts'][0]['path']
+                link = '[Open saved attachment](' + local + ')'
+                # Relative paths are not autolinked by Markdown renderers.
+                # Preserve clickable bare video/audio URLs and <autolinks>.
+                body = re.sub(r'(?m)^[ \t]*' + re.escape(url) + r'[ \t]*\r?$',
+                              lambda match: link, body)
+                body = body.replace('<' + url + '>', link)
+                body = body.replace(url, local)
         return body
 
     def conversation(self, kind, number, item, comments, reviews=(), inline=()):
