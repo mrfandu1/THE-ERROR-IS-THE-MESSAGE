@@ -1,0 +1,23 @@
+name: Test repository export tool
+on:
+  pull_request:
+    paths:
+      - 'tools/repository_dump.py'
+      - 'tests/test_repository_dump.py'
+      - '.github/workflows/*repository-dump.yml'
+  push:
+    paths:
+      - 'tools/repository_dump.py'
+      - 'tests/test_repository_dump.py'
+      - '.github/workflows/*repository-dump.yml'
+permissions:
+  contents: read
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - run: python -m unittest discover -s tests -v

@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+repository-dump/
+restored-assets/
+.env
+.env.*

@@ -1,0 +1,124 @@
+name: Save repository history and media
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_repository:
+        description: 'Repository to save (owner/name). Leave blank for this repository.'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: read
+
+concurrency:
+  group: repository-archive
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      ARCHIVE_BRANCH: repository-archive
+      SOURCE_REPOSITORY: ${{ inputs.source_repository || github.repository }}
+    steps:
+      - name: Get the export tool
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 1
+
+      - name: Test the export tool
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Prepare archive branch
+        shell: bash
+        run: |
+          archive_path="$RUNNER_TEMP/repository-archive"
+          if git ls-remote --exit-code --heads origin "$ARCHIVE_BRANCH" >/dev/null; then
+            git fetch origin "$ARCHIVE_BRANCH"
+            git worktree add --detach "$archive_path" FETCH_HEAD
+          else
+            git worktree add --detach "$archive_path" HEAD
+            git -C "$archive_path" switch --orphan archive-root
+          fi
+          echo "ARCHIVE_PATH=$archive_path" >> "$GITHUB_ENV"
+
+      - name: Save conversations and files
+        id: export
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 tools/repository_dump.py --repo "$SOURCE_REPOSITORY" --output "$ARCHIVE_PATH/archive"
+
+      - name: Verify saved files
+        run: python3 tools/repository_dump.py --verify "$ARCHIVE_PATH/archive"
+
+      - name: Commit the archive back into this repository
+        shell: bash
+        run: |
+          git -C "$ARCHIVE_PATH" config user.name 'github-actions[bot]'
+          git -C "$ARCHIVE_PATH" config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Keep each binary push small enough for GitHub's 2 GiB push limit.
+          python3 - <<'PY'
+          import os, subprocess
+          from pathlib import Path
+          root = Path(os.environ['ARCHIVE_PATH'])
+          branch = os.environ['ARCHIVE_BRANCH']
+          def git(*args):
+              return subprocess.run(['git', '-C', str(root), *args], check=True, capture_output=True)
+          paths = sorted(set(p for p in git('ls-files', '--others', '--modified', '--exclude-standard', '-z', '--', 'archive/assets').stdout.split(b'\0') if p))
+          batch, size, number = [], 0, 0
+          def publish(files, number):
+              if not files:
+                  return
+              git('add', '--', *files)
+              changed = subprocess.run(['git', '-C', str(root), 'diff', '--cached', '--quiet']).returncode
+              if changed == 1:
+                  git('commit', '-m', f'Save uploaded media batch {number}')
+                  git('push', 'origin', f'HEAD:refs/heads/{branch}')
+              elif changed:
+                  raise RuntimeError('Cannot inspect staged archive files')
+          for raw in paths:
+              path = os.fsdecode(raw)
+              weight = (root / path).stat().st_size
+              if batch and size + weight > 150 * 1024 * 1024:
+                  number += 1
+                  publish(batch, number)
+                  batch, size = [], 0
+              batch.append(path)
+              size += weight
+          publish(batch, number + 1)
+          PY
+          git -C "$ARCHIVE_PATH" add -- archive
+          if ! git -C "$ARCHIVE_PATH" diff --cached --quiet; then
+            git -C "$ARCHIVE_PATH" commit -m 'Save repository conversations and uploaded media'
+            git -C "$ARCHIVE_PATH" push origin "HEAD:refs/heads/$ARCHIVE_BRANCH"
+          fi
+
+      - name: Show export result
+        if: always()
+        env:
+          EXPORT_OUTCOME: ${{ steps.export.outcome }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path(os.environ.get('ARCHIVE_PATH', '')) / 'archive/report.json'
+          if not path.is_file():
+              raise SystemExit('No export report was produced; inspect the failed step above.')
+          report = json.loads(path.read_text())
+          archive_url = f"https://github.com/{os.environ['GITHUB_REPOSITORY']}/tree/repository-archive/archive"
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write('# Repository export\n\n')
+              summary.write(('Complete' if report['complete'] else 'INCOMPLETE') + '\n\n')
+              summary.write(f'[Open the saved archive]({archive_url})\n\n')
+              for name, count in report['counts'].items():
+                  summary.write(f'- {name.replace("_", " ")}: {count}\n')
+              summary.write('\nMissing downloads and API failures are recorded in `archive/report.json`.\n')
+          if not report['complete'] or os.environ['EXPORT_OUTCOME'] != 'success':
+              raise SystemExit('Export incomplete; saved available data and failure report. Rerun to retry.')
+          PY
